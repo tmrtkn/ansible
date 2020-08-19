@@ -1,0 +1,16 @@
+---
+- name: Set up DNS server
+  strategy: free
+  remote_user: "{{ username }}"
+  hosts: dns
+  become: yes
+  vars_files:
+    - vault.yml
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        cache_valid_time: 3600
+  roles:
+    # - role: server
+    - role: ansible-role-unbound
+

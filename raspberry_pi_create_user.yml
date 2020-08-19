@@ -1,0 +1,15 @@
+---
+- name: Create another user "{{ username }}": NOTE! THIS IS NOT TESTED!
+  remote_user: pi
+  hosts: local
+  become: yes
+  vars_files:
+    - vault.yml
+  tasks:
+    - name: Create user "{{ username }}"
+      user:
+        name: "{{ username }}"
+        groups: sudo
+        append: yes
+        password: "{{ password }}"
+

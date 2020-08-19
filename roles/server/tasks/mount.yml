@@ -1,0 +1,19 @@
+---
+ - name: Set mounts
+   debug:
+     msg: Distribution is {{ ansible_distribution }} / {{ ansible_distribution_version }} / {{ ansible_distribution_release }} / {{ ansible_lsb['id'] }}
+
+ - name: mount tmpfs
+   mount:
+     src: tmpfs
+     name: "{{ item.src }}"
+     fstype: tmpfs
+     opts: "defaults,{{ item.options }},size={{ item.size }}"
+     dump: "0"
+     passno: "0"
+     state: mounted
+   with_items: "{{ system_tmpfs_mounts }}"
+   when: system_tmpfs_mounts|length > 0
+
+
+

@@ -1,0 +1,19 @@
+---
+- name: Setup all linux servers
+  strategy: free
+  remote_user: "{{ username }}"
+  hosts: local
+  become: yes
+  vars_files:
+    - vault.yml
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        cache_valid_time: 3600
+  roles:
+    - role: server
+  vars:
+    system_packages:
+      - vim
+      - libsasl2-modules
+    system_default_editor_path: "/usr/bin/vim.basic"

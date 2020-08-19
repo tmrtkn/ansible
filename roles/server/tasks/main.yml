@@ -1,0 +1,60 @@
+---
+# tasks file for server
+
+# Kaikki toimii, kommentoitu pois ajon nopeuttamiseksi
+- import_tasks: update.yml
+  tags:
+    - update
+    
+- import_tasks: apt.yml
+  tags:
+    - apt
+    
+- import_tasks: hostname.yml
+  when: system_hostname is defined
+  tags: 
+   - hostname
+
+- import_tasks: locale.yml
+  tags:
+     - locale
+
+- import_tasks: mount.yml
+  when: ansible_lsb.id == "Raspbian"
+  tags:
+   - mount
+
+# TODO: Here could be some user stuff
+# - import_tasks: user.yml
+#   when: users stuff are defined
+
+- import_tasks: alternatives.yml
+  tags:
+     - alternatives
+
+- import_tasks: tmpfiles.yml
+  tags:
+     - tmpfiles
+
+- import_tasks: ssh.yml
+  tags:
+     - ssh
+
+# TODO UFW
+# - import_tasks: ufw.yml
+
+# TODO: raspi-config
+
+- import_tasks: postfix.yml
+  tags:
+     - postfix
+
+# TODO: Unattended upgrades
+
+- import_tasks: fail2ban.yml
+  tags:
+    - fail2ban
+
+- import_tasks: logwatch.yml
+  tags:
+     - logwatch

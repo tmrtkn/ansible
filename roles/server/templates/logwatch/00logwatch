@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Ansible managed
+
+# Check if removed-but-not-puged
+test -x /usr/share/logwatch/scripts/logwatch.pl || exit 0
+
+# Execute
+# /usr/sbin/logwatch --output mail
+/usr/sbin/logwatch --mailto {{ postfix_sasl_user }}
+
+# Note: It's possible to force the recipient in above command
+# Just pass --mailto address@a.com instead of --output mail

@@ -1,0 +1,5 @@
+---
+system_hostname: laidun
+ansible_ssh_host: 192.168.3.2
+ansible_port: 2223
+
