@@ -1,3 +1,6 @@
 ---
 system_hostname: lab
 ansible_ssh_host: 192.168.10.112
+
+mountpoints:
+ - { uuid: "b8ca8aee-01e3-439a-9e7b-ecc8b29d2bcb", path: "/data", fstype: "ext4", opts: "relatime" }

@@ -19,8 +19,12 @@
   tags:
      - locale
 
-- import_tasks: mount.yml
+- import_tasks: mount_tmpfs.yml
   when: ansible_lsb.id == "Raspbian"
+  tags:
+   - mount_tmpfs
+
+- import_tasks: mount.yml
   tags:
    - mount
 
