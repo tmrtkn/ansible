@@ -1,0 +1,35 @@
+---
+# This is copied from https://github.com/emielmolenaar/ansible-role-docker-pihole/blob/master/tasks/main.yml
+# tasks file for docker-pihole
+
+ - name: Setup pihole docker container
+   docker_container:
+     name: "{{ docker_pihole_container_name }}"
+     image: "{{ docker_pihole_image }}"
+     state: started
+     restart: yes
+     restart_policy: unless-stopped
+     networks_cli_compatible: yes
+     network_mode: "{{ docker_pihole_network_mode }}"
+     volumes: "{{ docker_pihole_volumes }}"
+     env:
+       TZ: "{{ docker_pihole_timezone }}"
+       INTERFACE: "{{ docker_pihole_network_interface }}"
+       ServerIP: "{{ ansible_default_ipv4.address }}"
+     capabilities: NET_ADMIN
+     dns_servers: "{{ docker_pihole_dns_servers }}"
+
+ - name: Install pexpect for resetting pihole password
+   become: yes
+   apt:
+     name: python3-pexpect
+     state: present
+
+ - name: Remove pihole password
+   expect: 
+     command: docker exec -it pihole pihole -a -p
+     responses: 
+       (?i)Password: "\n"
+     
+
+

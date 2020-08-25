@@ -1,0 +1,21 @@
+---
+# defaults file for docker-pihole
+
+docker_pihole_container_name: pihole
+docker_pihole_image: pihole/pihole:v5.1.2-armhf-buster
+
+docker_pihole_host_dir_pihole: /etc/pihole/
+docker_pihole_host_dir_dnsmasq: /etc/dnsmasq.d/
+docker_pihole_volumes:
+  - "{{ docker_pihole_host_dir_pihole }}:/etc/pihole/"
+  - "{{ docker_pihole_host_dir_dnsmasq }}:/etc/dnsmasq.d/"
+  
+docker_pihole_timezone: "Europe/Helsinki"
+
+docker_pihole_network_interface: "eth0"
+docker_pihole_network_mode: host
+
+docker_pihole_dns_servers:
+  - 127.0.0.1
+  - 8.8.8.8
+
