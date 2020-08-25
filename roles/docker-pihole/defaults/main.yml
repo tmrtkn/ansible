@@ -17,5 +17,8 @@ docker_pihole_network_mode: host
 
 docker_pihole_dns_servers:
   - 127.0.0.1
-  - 8.8.8.8
+  - 127.0.0.1#5335
+  # - 8.8.8.8
 
+docker_pihole_dns_server_ip: "{{ ansible_default_ipv4.address }}"
+docker_pihole_dns_server_port: "5335"

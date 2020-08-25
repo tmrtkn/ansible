@@ -18,6 +18,10 @@
     hide-identity: yes
     hide-version: yes
 
+# Uncomment these for query logging
+    # chroot: ""
+    # log-queries: yes
+
 {% for private_address in unbound_private_address %}
     private-address: {{private_address}}
 {% endfor %}

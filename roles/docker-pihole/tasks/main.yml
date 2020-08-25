@@ -30,6 +30,19 @@
      command: docker exec -it pihole pihole -a -p
      responses: 
        (?i)Password: "\n"
-     
 
+ - name: Set local custom upstream dns
+   become: yes
+   lineinfile:
+     dest: /etc/pihole/setupVars.conf
+     regexp: 'PIHOLE_DNS_1'
+     line: 'PIHOLE_DNS_1={{ docker_pihole_dns_server_ip }}#{{ docker_pihole_dns_server_port }}'
+     state: present
+
+ - name: Remove other upstream dns servers
+   become: yes
+   lineinfile:
+     dest: /etc/pihole/setupVars.conf
+     regexp: 'PIHOLE_DNS_[2-9]'
+     state: absent
 

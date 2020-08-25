@@ -2,11 +2,17 @@
 # Using user 'pi', create new user
  - import_tasks: raspberry_pi_create_user.yml
    when: ansible_lsb.id == "Raspbian"
+   
 # Using just created user, remove user 'pi'
  - import_tasks: raspberry_pi_remove_pi_user.yml
    when: ansible_lsb.id == "Raspbian"
+
 # For every server, do basic setup things
 # Goes for rpis and other also
  - import_tasks: basic_setup.yml
+
+# Set up DNS stuff. Pihole and unbound
+ - import_tasks: dns.yml
+
 # Setup docker for docker hosts
  - import_tasks: docker.yml
