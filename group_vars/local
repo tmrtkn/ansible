@@ -1,0 +1,33 @@
+---
+# For 'server' role
+system_timezone: "Europe/Helsinki"
+# system_locale: "en_US.UTF-8"
+
+system_packages:
+  - vim
+ # - silversearcher-ag # for vim & fzf
+  - libsasl2-modules # postfix stuff
+# system_default_editor_path: "/usr/bin/vim.basic"
+
+system_default_editor_path: "/usr/bin/vi"
+
+logwatch_mailto: "root"
+logwatch_detail: "High"
+logwatch_interval: "daily"
+
+# postfix_hostname: "{{ ansible_hostname }}"
+# postfix_mailname: "{{ ansible_hostname }}"
+# postfix_mydestination:
+#  - "{{ postfix_hostname }}"
+#  - localdomain
+#  - localhost
+#  - localhost.localdomain
+# postfix_relayhost: smtp.gmail.com
+# postfix_relayhost_port: 587
+postfix_sasl_user: "{{ postfix_sasl_user }}"
+postfix_sasl_user_password: "{{ postfix_sasl_user_password }}"
+# postfix_smtp_tls_cafile: /etc/ssl/certs/ca-certificates.crt
+
+ssh_sshd_config: "/etc/ssh/sshd_config"
+ssh_banner:
+
