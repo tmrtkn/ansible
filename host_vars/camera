@@ -1,5 +1,22 @@
 ---
 system_hostname: camera
-ansible_ssh_host: 192.168.2.4
+# Use this public address when creating a VPN connections
+# Otherwise, use internal address
+# ansible_host: kovelahti.dy.fi
+ansible_host: 192.168.2.4
+ansible_become_user: root
 ansible_port: 2223
+
+# Wireguard
+wireguard_address: "10.8.1.4"
+wireguard_endpoint: "kovelahti.dy.fi"
+
+wireguard_allowed_ips: "{{ wireguard_address }}/32, 192.168.2.0/24"
+
+wireguard_postup:
+ - iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eno1 -j MASQUERADE # ; iptables -I DOCKER-USER -o wg0 -j ACCEPT
+
+wireguard_postdown:
+ - iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eno1 -j MASQUERADE #; iptables -D DOCKER-USER -o wg0 -j ACCEPT
+
 

@@ -1,0 +1,12 @@
+---
+
+# Directory to store WireGuard configuration on the remote hosts
+wireguard_remote_directory: "/etc/wireguard"
+
+# The default port WireGuard will listen if not specified otherwise.
+wireguard_port: "8025"
+
+# The default interface name that wireguard should use if not specified otherwise.
+wireguard_interface: "wg0"
+
+wireguard_persistent_keepalive: "30"
