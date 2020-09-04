@@ -1,0 +1,34 @@
+---
+# Set up network host monitoring
+ - name: Set up network monitoring server
+   strategy: free
+   remote_user: "{{ username }}"
+   hosts: monitor_server
+   become: yes
+   vars_files:
+     - vault.yml
+   pre_tasks:
+   roles:
+     - role: docker-grafana
+     #- role: grafana-influxdb
+     - role: ansible-snmp-exporter
+     - role: ansible-prometheus
+   tags:
+     - server
+
+ - name: Set up network monitoring hosts
+   strategy: free
+   remote_user: "{{ username }}"
+   hosts: monitor_host
+   become: yes
+   vars_files:
+     - vault.yml
+   pre_tasks:
+     - name: Update apt cache
+       apt:
+         cache_valid_time: 3600
+   roles:
+     - role: ansible-node-exporter
+   tags:
+     - hosts
+

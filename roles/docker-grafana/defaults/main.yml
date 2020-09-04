@@ -1,0 +1,9 @@
+---
+# defaults file for docker-grafana
+
+docker_grafana_timezone: "Europe/Helsinki"
+
+docker_grafana_container_name: grafana
+docker_grafana_image: grafana/grafana:master
+
+docker_grafana_network_mode: host

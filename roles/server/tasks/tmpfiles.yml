@@ -1,5 +1,4 @@
 ---
-
  - name: Ensure that lastlog-file exists
    template:
      src: tmpfiles/var-lastlog.conf.j2

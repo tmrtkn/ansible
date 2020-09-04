@@ -1,0 +1,16 @@
+---
+# tasks file for docker-grafana
+
+ - name: Setup grafana docker container
+   docker_container:
+     name: "{{ docker_grafana_container_name }}"
+     image: "{{ docker_grafana_image }}"
+     state: started
+     restart: yes
+     restart_policy: unless-stopped
+     networks_cli_compatible: yes
+     network_mode: "{{ docker_grafana_network_mode }}"
+     env:
+       TZ: "{{ docker_grafana_timezone }}"
+
+
