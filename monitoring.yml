@@ -10,8 +10,9 @@
    pre_tasks:
    roles:
      - role: docker-grafana
-     #- role: grafana-influxdb
+     # not in use- role: grafana-influxdb
      - role: ansible-snmp-exporter
+     - role: ansible-role-netatmo-exporter-docker
      - role: ansible-prometheus
    tags:
      - server

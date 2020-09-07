@@ -3,42 +3,35 @@ unbound_anchorfile: "/var/lib/unbound/root.key"
 unbound_anchor_enabled: true
 unbound_logfile: "/var/log/unbound.log"
 unbound_configuration:
-  - verbosity: 1
-  - do-ip4: "yes"
-  - do-ip6: "no"
-  - num-threads: 1
-  - pidfile: "/var/run/unbound.pid"
-  - logfile: "{{unbound_logfile}}"
-  - port: 5335
-  - tls-cert-bundle: /etc/ssl/certs/ca-certificates.crt
+    - verbosity: 1
+    - do-ip4: "yes"
+    - do-ip6: "no"
+    - num-threads: 1
+    - pidfile: "/var/run/unbound.pid"
+    - logfile: "{{unbound_logfile}}"
 
 unbound_zone_name: "default"
 unbound_only_zones: false
 
 unbound_interfaces:
-  - 127.0.0.1
-  - 192.168.10.112
+    - 127.0.0.1
 
 unbound_access_control:
-  - 127.0.0.1 allow
-  - 192.168.0.0/16 allow
+    - 127.0.0.1 allow
 
 unbound_private_address:
-  - 10.0.0.0/8
-  - 172.16.0.0/12
-  - 192.168.0.0/16
-  - 169.254.0.0/16
-  - "fd00::/8"
-  - "fe80::/10"
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - 169.254.0.0/16
+    - "fd00::/8"
+    - "fe80::/10"
 
 unbound_domains: {}
 
 unbound_domains_with_reverses: []
 
-unbound_inventory_domain:
-  all: 'internal.domain'
-unbound_inventory_reverse_domain:
-  all: 'internal.domain'
+unbound_inventory_domain: {}
 
 unbound_local_zone_type: {}
 unbound_local_zone: []
@@ -51,8 +44,8 @@ unbound_zones:
     - name: "default"
 
 unbound_forward_zone_active: true
-unbound_forward_zone_configuration:
-    - forward-tls-upstream: "yes" #`forward-ssl-upstream` for older version
+unbound_forward_zone_configuration: {}
+#    - forward-tls-upstream: "yes" #`forward-ssl-upstream` for older version
 unbound_forward_zone:
     # cloudflare resolvers
     - "1.1.1.1@853#cloudflare-dns.com"

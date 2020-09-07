@@ -1,0 +1,32 @@
+---
+
+# Other stuff for dns server
+unbound_interfaces:
+  - 127.0.0.1
+  - 192.168.10.112
+
+unbound_access_control:
+  - 127.0.0.1 allow
+  - 192.168.0.0/16 allow
+
+unbound_domains: "{{ private_domain }}"
+
+unbound_configuration:
+  - verbosity: 1
+  - do-ip4: "yes"
+  - do-ip6: "no"
+  - num-threads: 1
+  - pidfile: "/var/run/unbound.pid"
+  - logfile: "{{unbound_logfile}}"
+  - port: 5335
+  - tls-cert-bundle: /etc/ssl/certs/ca-certificates.crt
+
+unbound_forward_zone_configuration:
+    - forward-tls-upstream: "yes" #`forward-ssl-upstream` for older version
+
+unbound_inventory_domain:
+  all: 'internal.domain'
+
+# Is this used anywhere???
+unbound_inventory_reverse_domain:
+  all: 'internal.domain'

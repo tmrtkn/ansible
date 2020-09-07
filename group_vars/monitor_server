@@ -1,0 +1,55 @@
+---
+
+# Prometheus stuff
+# TODO: Should these be in group_vars?
+prometheus_db_dir: /data/prometheus
+snmp_exporter_config_file: "snmp.yml"
+
+prometheus_config_flags_extra:
+  web.enable-admin-api:
+
+prometheus_targets: 
+ node:
+   - targets:
+       - deploy:9100
+       - lab:9100
+       - pihole:9100
+       - camera:9100
+     labels:
+       env: kovelahti
+
+prometheus_scrape_configs:
+  # Prometheus service itself
+  - job_name: "prometheus"
+    metrics_path: "{{ prometheus_metrics_path }}"
+    static_configs:
+      - targets:
+          - "{{ ansible_fqdn | default(ansible_host) | default('localhost') }}:9090"
+  # Node exporter
+  - job_name: "node"
+    file_sd_configs:
+      - files:
+          - "{{ prometheus_config_dir }}/file_sd/node.yml"
+  # Router
+  - job_name: 'snmp'
+    scrape_interval: 5s
+    static_configs:
+    - targets:
+      - 192.168.10.1
+    metrics_path: /snmp
+    params:
+      module:
+        - edgerouter
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: lab:9116
+  - job_name: 'netatmo'
+    scrape_interval: 90s
+    static_configs:
+    - targets:
+      - lab:9210
+    

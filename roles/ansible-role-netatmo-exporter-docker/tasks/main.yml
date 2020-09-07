@@ -1,0 +1,55 @@
+---
+# tasks file for ansible-role-netatmo-exporter-docker
+
+# Check if the netatmo-exporter directory already exists
+ - name: Check if the netatmo-exporter directory already exists
+   stat:
+    path: "{{ netatmo_exporter_dir }}"
+   register: netatmo_dir
+
+# Download code from github
+ - name: Download netatmo-exporter from GitHub
+   become: no
+   git:
+     repo: "https://github.com/xperimental/netatmo-exporter.git"
+     dest: "{{ netatmo_exporter_dir }}"
+   when: not netatmo_dir.stat.exists
+
+# Edit the Makefile and say that we are on raspberry pi, if we are
+ - name: Edit makefile if this is rpi
+   become: no
+   lineinfile:
+     path: "{{ netatmo_exporter_dir }}/Makefile"
+     regexp: "^GO_ARCH="
+     insertbefore: ".+\\?\\=+"
+     firstmatch: yes
+     line: "GO_ARCH=arm"
+   when: ansible_architecture == "armv7l" and not netatmo_dir.stat.exists
+
+# Build an image
+ - name: Build netatmo-exporter Docker image
+   become: no
+   docker_image:
+     name: "{{ docker_netatmo_exporter_image }}"
+     build: 
+       path: "{{ netatmo_exporter_dir }}"
+     source: build
+
+# Start an image
+ - name: Start netatmo-exporter docker container
+   docker_container:
+     name: "{{ docker_netatmo_exporter_container_name }}"
+     image: "{{ docker_netatmo_exporter_image }}"
+     state: started
+     restart: yes
+     restart_policy: unless-stopped
+     networks_cli_compatible: yes
+     network_mode: "{{ docker_netatmo_exporter_network_mode }}"
+     env:
+       TZ: "{{ docker_netatmo_exporter_timezone }}"
+       NETATMO_EXPORTER_ADDR: "0.0.0.0:9210"
+       NETATMO_CLIENT_ID: "{{ netatmo_client_id }}"
+       NETATMO_CLIENT_SECRET: "{{ netatmo_client_secret }}" 
+       NETATMO_CLIENT_USERNAME: "{{ netatmo_client_username }}"
+       NETATMO_CLIENT_PASSWORD: "{{ netatmo_client_password }}"
+

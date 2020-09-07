@@ -7,9 +7,5 @@
   become: yes
   vars_files:
     - vault.yml
-  # pre_tasks:
-  #   - name: Update apt cache
-  #     apt:
-  #       cache_valid_time: 3600
   roles:
     - role: ansible-role-wireguard

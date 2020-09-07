@@ -3,6 +3,24 @@ system_hostname: lab
 ansible_host: 192.168.10.112
 ansible_ssh_host: 192.168.10.112
 
+# This list is copied and extended from var_hosts/local
+# TODO: How to do this better? So that I could just add stuff here and keep the stuff defined in group-vars
+system_packages:
+  - vim
+ # - silversearcher-ag # for vim & fzf
+  - libsasl2-modules # postfix stuff
+  # If if installing git does not work because of some broken dependencies, install gcc-8-base to fix the problem
+  # gcc-8-base seems to require some user intactions, so I don't know if it can be run here, or some 'y' flag need so be set, at least
+  # - gcc-8-base
+  - git
+
+go_arch_map:
+  i386: '386'
+  x86_64: 'amd64'
+  aarch64: 'arm64'
+  armv7l: 'armv7'
+  armv6l: 'armv6'
+
 
 # For mounting local disk
 mountpoints:
@@ -20,46 +38,9 @@ wireguard_postup:
 wireguard_postdown:
  - iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 
-# Prometheus stuff
-prometheus_db_dir: /data/prometheus
-snmp_exporter_config_file: "snmp.yml"
-
-prometheus_config_flags_extra:
-  web.enable-admin-api:
-
-prometheus_targets: 
- node:
-   - targets:
-       - deploy:9100
-       - lab:9100
-       - pihole:9100
-       - camera:9100
-     labels:
-       env: kovelahti
-
-prometheus_scrape_configs:
-  - job_name: "prometheus"
-    metrics_path: "{{ prometheus_metrics_path }}"
-    static_configs:
-      - targets:
-          - "{{ ansible_fqdn | default(ansible_host) | default('localhost') }}:9090"
-  - job_name: "node"
-    file_sd_configs:
-      - files:
-          - "{{ prometheus_config_dir }}/file_sd/node.yml"
-  - job_name: 'snmp'
-    scrape_interval: 5s
-    static_configs:
-    - targets:
-      - 192.168.10.1
-    metrics_path: /snmp
-    params:
-      module:
-        - edgerouter
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: lab:9116
+# Netatmo stuff
+netatmo_exporter_dir: "~/workspace/netatmo-exporter"
+docker_netatmo_exporter_image: "netatmo-exporter"
+docker_netatmo_exporter_container_name: "netatmo-exporter"
+docker_netatmo_exporter_network_mode: host
+docker_netatmo_exporter_timezone: "Europe/Helsinki" 
