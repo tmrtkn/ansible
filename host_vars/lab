@@ -38,9 +38,3 @@ wireguard_postup:
 wireguard_postdown:
  - iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 
-# Netatmo stuff
-netatmo_exporter_dir: "~/workspace/netatmo-exporter"
-docker_netatmo_exporter_image: "netatmo-exporter"
-docker_netatmo_exporter_container_name: "netatmo-exporter"
-docker_netatmo_exporter_network_mode: host
-docker_netatmo_exporter_timezone: "Europe/Helsinki" 

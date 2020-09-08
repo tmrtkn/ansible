@@ -1,6 +1,9 @@
 ---
 # tasks file for ansible-role-netatmo-exporter-docker
 
+
+
+
 # Check if the netatmo-exporter directory already exists
  - name: Check if the netatmo-exporter directory already exists
    stat:
@@ -14,6 +17,20 @@
      repo: "https://github.com/xperimental/netatmo-exporter.git"
      dest: "{{ netatmo_exporter_dir }}"
    when: not netatmo_dir.stat.exists
+
+# TODO:
+ # - name: Edit Dockerfile and change image base from busybox to arm32v7/alpine so that the timezone can be set
+ #         if this is rpi
+ #   become: no
+ #   lineinfile:
+ #     path: "{{ netatmo_exporter_dir }}/Dockerfile"
+ #     regexp: "^GO_ARCH="
+ #     insertbefore: ".+\\?\\=+"
+ #     firstmatch: yes
+ #     line: "GO_ARCH=arm"
+ #   when: ansible_architecture == "armv7l" and not netatmo_dir.stat.exists
+
+# TODO: If this is rpi and previous step is done, then we need to also add the tzdata package to Dockerfile
 
 # Edit the Makefile and say that we are on raspberry pi, if we are
  - name: Edit makefile if this is rpi
@@ -35,6 +52,14 @@
        path: "{{ netatmo_exporter_dir }}"
      source: build
 
+ - name: Create timezone file
+   become: no
+   copy:
+     dest: "{{ netatmo_exporter_dir }}/TZ"
+     content: |
+       {{ docker_netatmo_exporter_timezone }}
+   when: docker_netatmo_exporter_timezone is defined
+
 # Start an image
  - name: Start netatmo-exporter docker container
    docker_container:
@@ -45,6 +70,9 @@
      restart_policy: unless-stopped
      networks_cli_compatible: yes
      network_mode: "{{ docker_netatmo_exporter_network_mode }}"
+     # volumes:
+     #   # - "/etc/localtime:/etc/localtime:ro"
+       # - "{{ netatmo_exporter_dir }}/TZ:/etc/TZ:ro"
      env:
        TZ: "{{ docker_netatmo_exporter_timezone }}"
        NETATMO_EXPORTER_ADDR: "0.0.0.0:9210"
@@ -52,4 +80,6 @@
        NETATMO_CLIENT_SECRET: "{{ netatmo_client_secret }}" 
        NETATMO_CLIENT_USERNAME: "{{ netatmo_client_username }}"
        NETATMO_CLIENT_PASSWORD: "{{ netatmo_client_password }}"
+       # UCLIBC_TZ_FILE_PATH: "/etc/localtime"
 
+# TODO: Check that this is running ok.

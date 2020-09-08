@@ -13,6 +13,7 @@
      # not in use- role: grafana-influxdb
      - role: ansible-snmp-exporter
      - role: ansible-role-netatmo-exporter-docker
+     - role: ansible-blackbox-exporter
      - role: ansible-prometheus
    tags:
      - server
