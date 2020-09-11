@@ -37,7 +37,6 @@ docker_netatmo_exporter_network_mode: host
 docker_netatmo_exporter_timezone: Europe/Helsinki
 
 # Prometheus stuff
-# TODO: Should these be in group_vars?
 prometheus_db_dir: /data/prometheus
 snmp_exporter_config_file: "snmp.yml"
 
@@ -45,7 +44,7 @@ prometheus_config_flags_extra:
   web.enable-admin-api:
 
 prometheus_targets: 
- node:
+  node:
    - targets:
        - deploy:9100
        - lab:9100
@@ -55,24 +54,21 @@ prometheus_targets:
        env: kovelahti
 
 prometheus_scrape_configs:
-  # Prometheus service itself
   - job_name: "prometheus"
     metrics_path: "{{ prometheus_metrics_path }}"
     static_configs:
       - targets:
           - "{{ ansible_fqdn | default(ansible_host) | default('localhost') }}:9090"
-  # Node exporter
   - job_name: "node"
     file_sd_configs:
       - files:
           - "{{ prometheus_config_dir }}/file_sd/node.yml"
-  # Router
   - job_name: 'snmp'
     scrape_interval: 5s
-    static_configs:
-    - targets:
-      - 192.168.10.1
     metrics_path: /snmp
+    static_configs:
+      - targets:
+          - 192.168.10.1
     params:
       module:
         - edgerouter
@@ -86,21 +82,22 @@ prometheus_scrape_configs:
   - job_name: 'netatmo'
     scrape_interval: 90s
     static_configs:
-    - targets:
-      - lab:9210
+      - targets:
+          - lab:9210
   - job_name: 'Blackbox ping'
     metrics_path: /probe
     params:
-      module: [icmp_test] 
+      module:
+        - icmp_test
     static_configs: 
       - targets:
-        - camera
-        - lab
-        - pihole
-        - deploy
-        - www.google.com  
-        - 8.8.8.8
-        - 1.1.1.1
+          - camera
+          - lab
+          - pihole
+          - deploy
+          - www.google.com  
+          - 8.8.8.8
+          - 1.1.1.1
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -108,3 +105,28 @@ prometheus_scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: lab:9115
+
+prometheus_alertmanager_config:
+  - scheme: http
+    static_configs:
+      - targets: 
+          - lab:9093
+
+
+##  Alertmanager configurations
+# Email settings
+alertmanager_smtp:
+  from: Alertmanager@{{ system_hostname }}
+  smarthost: "{{ system_hostname }}:25"
+  hello: "{{ system_hostname }}"
+  auth_username: "{{ postfix_sasl_user }}"
+  auth_password: "{{ postfix_sasl_user_password }}"
+
+alertmanager_route:
+  receiver: email
+
+alertmanager_receivers:
+  - name: email
+    email_configs:
+      - send_resolved: true
+        to: "{{ postfix_sasl_user }}"

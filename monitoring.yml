@@ -14,6 +14,7 @@
      - role: ansible-snmp-exporter
      - role: ansible-role-netatmo-exporter-docker
      - role: ansible-blackbox-exporter
+     - role: ansible-alertmanager
      - role: ansible-prometheus
    tags:
      - server
