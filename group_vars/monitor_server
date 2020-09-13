@@ -130,3 +130,12 @@ alertmanager_receivers:
     email_configs:
       - send_resolved: true
         to: "{{ postfix_sasl_user }}"
+
+alertmanager_inhibit_rules:
+  - target_match:
+      alertname: Watchdog
+    source_match:
+      alertname: Watchdog
+    equal:
+      - prometheus
+  
