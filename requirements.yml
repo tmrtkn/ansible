@@ -1,0 +1,24 @@
+# Here are the dependencies for running all the playbooks
+
+# Prometheus server
+- src: https://github.com/cloudalchemy/ansible-prometheus.git
+
+# Alertmanager for prometheus
+- src: https://github.com/cloudalchemy/ansible-alertmanager.git
+
+# Node exporter for monitoring hosts
+- src: https://github.com/cloudalchemy/ansible-node-exporter.git
+
+# Blackbox exporter for monitoring remote hosts
+- src: https://github.com/cloudalchemy/ansible-blackbox-exporter.git
+
+# SNMP exporter for monitoring network devices
+- src: https://github.com/prometheus/snmp_exporter.git
+
+# Ansible role for Unbound DNS server
+- src: https://github.com/jdauphant/ansible-role-unbound.git
+
+# Wireguard
+- src: https://github.com/githubixx/ansible-role-wireguard.git
+
+
