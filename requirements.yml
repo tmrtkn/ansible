@@ -13,7 +13,7 @@
 - src: https://github.com/cloudalchemy/ansible-blackbox-exporter.git
 
 # SNMP exporter for monitoring network devices
-- src: https://github.com/prometheus/snmp_exporter.git
+- src: https://github.com/cloudalchemy/ansible-snmp-exporter.git 
 
 # Ansible role for Unbound DNS server
 - src: https://github.com/jdauphant/ansible-role-unbound.git
