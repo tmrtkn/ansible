@@ -21,4 +21,5 @@
 # Wireguard
 - src: https://github.com/githubixx/ansible-role-wireguard.git
 
-
+# NTP
+- src: https://github.com/geerlingguy/ansible-role-ntp.git

@@ -21,3 +21,5 @@ postfix_sasl_user_password: "{{ postfix_sasl_user_password }}"
 ssh_sshd_config: "/etc/ssh/sshd_config"
 ssh_banner:
 
+# NTP Settings
+ntp_timezone: "{{ system_timezone }}"
