@@ -1,0 +1,22 @@
+# Temperature rules
+
+groups:
+  - name: Rules for watching room temperatures
+    rules:
+      - alert: RoomTemperatureLow
+        expr: netatmo_sensor_temperature_celsius{module=~"Yl\u00e4kerta|Oma huone|Olohuone"} < 20 
+        for: 20m
+        labels:
+         severity: warning 
+        annotations:
+          description: 'Temperature has dropped below 20 celsius in {{ $labels.module }}. Current temperature is {{ printf "%.2f" $value }} degrees. Consider turning more heat.'
+          summary: 'Temperature has dropped below 20 celsius.'
+      - alert: RoomTemperatureHigh
+        expr: netatmo_sensor_temperature_celsius{module=~"Yl\u00e4kerta|Oma huone|Olohuone"} > 25 
+        for: 20m
+        labels:
+          severity: warning
+        annotations:
+          description: 'Temperature has climbed above 25 celsius in {{ $labels.module }}. Current temperature is {{ printf "%.2f" $value }} degrees. Consider turning less hear or cooling on.'
+          summary: 'Temperature has climbed above 25 celsius.'
+
