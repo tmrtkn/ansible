@@ -182,14 +182,15 @@ groups:
         summary: "Host node overtemperature alarm (instance {{ $labels.instance }})"
         description: "Physical node temperature alarm triggered\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
-    - alert: HostKernelVersionDeviations
-      expr: count(sum(label_replace(node_uname_info, "kernel", "$1", "release", "([0-9]+.[0-9]+.[0-9]+).*")) by (kernel)) > 1
-      for: 5m
-      labels:
-        severity: warning
-      annotations:
-        summary: "Host kernel version deviations (instance {{ $labels.instance }})"
-        description: "Different kernel versions are running\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+# This counts different kernel version over all hosts
+    # - alert: HostKernelVersionDeviations
+    #   expr: count(sum(label_replace(node_uname_info, "kernel", "$1", "release", "([0-9]+.[0-9]+.[0-9]+).*")) by (kernel)) > 1
+    #   for: 5m
+    #   labels:
+    #     severity: warning
+    #   annotations:
+    #     summary: "Host kernel version deviations (instance {{ $labels.instance }})"
+    #     description: "Different kernel versions are running\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
 
     - alert: HostNetworkReceiveErrors
