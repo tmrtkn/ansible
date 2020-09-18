@@ -84,6 +84,10 @@ prometheus_scrape_configs:
     static_configs:
       - targets:
           - lab:9210
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets:
+          - camera:9338
   - job_name: 'Blackbox ping'
     metrics_path: /probe
     params:

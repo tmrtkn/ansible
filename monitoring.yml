@@ -16,13 +16,11 @@
      - role: ansible-blackbox-exporter
      - role: ansible-alertmanager
      - role: ansible-prometheus
-   tags:
-     - server
 
- - name: Set up network monitoring hosts
+ - name: Set up node exporters for monitoring hosts
    strategy: free
    remote_user: "{{ username }}"
-   hosts: monitor_host
+   hosts: local
    become: yes
    vars_files:
      - vault.yml
@@ -32,6 +30,4 @@
          cache_valid_time: 3600
    roles:
      - role: ansible-node-exporter
-   tags:
-     - hosts
 

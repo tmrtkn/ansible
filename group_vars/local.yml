@@ -9,6 +9,28 @@ system_packages:
   - libsasl2-modules # postfix stuff
 # system_default_editor_path: "/usr/bin/vim.basic"
 
+rpi_boot_config: 
+ - disable_overscan: 1
+
+# 1|0 -> 1=false/off 0=true/on
+rpi_cmdline_config:
+  - boot_behaviour: B1
+  - overscan: 1
+  - boot_splash: 1
+  - pix_dup: 1
+  - camera: 1
+  - ssh: 0
+  - vnc: 1
+  - spi: 1
+  - i2c: 1
+  - serial: 1
+  - 1wire: 1
+  - rgpio: 1
+  - memory_split: 16
+  - wifi_country: FI
+  - pi4video: V3 # NONE
+  -  
+
 system_default_editor_path: "/usr/bin/vi"
 
 logwatch_mailto: "root"

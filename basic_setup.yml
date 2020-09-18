@@ -11,5 +11,5 @@
       apt:
         cache_valid_time: 3600
   roles:
-    # - role: server
+    - role: server
     - role: ansible-role-ntp
