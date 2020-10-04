@@ -23,3 +23,12 @@
 
 # NTP
 - src: https://github.com/geerlingguy/ansible-role-ntp.git
+
+# cAdvisor
+# - src: https://github.com/ome/ansible-role-cadvisor.git
+
+# Dy.fi
+- src: https://github.com/tmrtkn/ansible-role-dyfi.git
+
+# ansible-raspi-config
+- src: https://github.com/mikolak-net/ansible-raspi-config.git

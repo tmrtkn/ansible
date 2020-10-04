@@ -2,14 +2,16 @@
 system_hostname: camera
 # Use this public address when creating a VPN connections
 # Otherwise, use internal address
-# ansible_host: kovelahti.dy.fi
+# ansible_host: "{{ dyfi_host_camera }}"
 ansible_ssh_host: 192.168.2.4
 ansible_become_user: root
 ansible_port: 2223
 
+dyfi_host: "{{ dyfi_host_camera }}"
+
 # Wireguard
 wireguard_address: "10.8.1.4"
-wireguard_endpoint: "kovelahti.dy.fi"
+wireguard_endpoint: "{{ dyfi_host_camera }}"
 
 wireguard_allowed_ips: "{{ wireguard_address }}/32, 192.168.2.0/24"
 

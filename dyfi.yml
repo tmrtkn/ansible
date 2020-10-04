@@ -1,0 +1,9 @@
+- name: Setup dyfi endpoints
+  strategy: free
+  remote_user: "{{ username }}"
+  hosts: dyfi
+  become: yes
+  vars_files:
+    - vault.yml
+  roles:
+    - role: ansible-role-dyfi
