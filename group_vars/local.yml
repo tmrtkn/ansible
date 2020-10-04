@@ -35,7 +35,7 @@ system_default_editor_path: "/usr/bin/vi"
 
 logwatch_mailto: "root"
 logwatch_detail: "Med"
-logwatch_interval: "daily"
+logwatch_interval: "weekly"
 
 postfix_sasl_user: "{{ postfix_sasl_user }}"
 postfix_sasl_user_password: "{{ postfix_sasl_user_password }}"
