@@ -78,12 +78,12 @@ prometheus_scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: lab:9116
+        replacement: "{{ system_hostname }}:9116"
   - job_name: 'netatmo'
     scrape_interval: 90s
     static_configs:
       - targets:
-          - lab:9210
+          - "{{ system_hostname }}:9210"
   - job_name: 'cadvisor'
     static_configs:
       - targets:
@@ -108,13 +108,13 @@ prometheus_scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: lab:9115
+        replacement: "{{ system_hostname }}:9115"
 
 prometheus_alertmanager_config:
   - scheme: http
     static_configs:
       - targets: 
-          - lab:9093
+          - "{{ system_hostname }}:9093"
 
 
 ##  Alertmanager configurations

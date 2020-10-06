@@ -1,26 +1,33 @@
 ---
 # Using user 'pi', create new user
- - import_tasks: raspberry_pi_create_user.yml
-   when: ansible_lsb.id == "Raspbian"
+# Run this separately from this playbook.
+# This uses remote_user: pi to create another user.
+# When another user is created, then rest of the playbooks can be run.
+# e.g.:
+# $ ansible-playbook -i hosts.yml --vault-password-file ./vault_password raspberry_pi_create_user.yml --limit <host> -k -K
+ # - import_playbook: raspberry_pi_create_user.yml
    
 # Using just created user, remove user 'pi'
- - import_tasks: raspberry_pi_remove_pi_user.yml
-   when: ansible_lsb.id == "Raspbian"
+ - import_playbook: raspberry_pi_remove_pi_user.yml
+
+# For every server, do basic setup things
+# Goes for rpis and other also
+ - import_playbook: basic_setup.yml
 
 # Setup vpn
 # You need to manually change 'camera'-hosts
 # 'ansible_host' variable to point to the public address
 # and after this vpn.yml playbook, change it back to internal address
- - import_tasks: vpn.yml
-
-# For every server, do basic setup things
-# Goes for rpis and other also
- - import_tasks: basic_setup.yml
+ - import_playbook: vpn.yml
 
 # Set up DNS stuff. Pihole and unbound
- - import_tasks: dns.yml
+ - import_playbook: dns.yml
 
 # Setup docker for docker hosts
- - import_tasks: docker.yml
+ - import_playbook: docker.yml
 
 # Setup monitoring
+ - import_playbook: monitoring.yml
+
+# Setup dyfi DDNS
+ - import_playbook: dyfi.yml

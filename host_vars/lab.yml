@@ -22,9 +22,6 @@ go_arch_map:
   armv6l: 'armv6'
 
 
-# For mounting local disk
-mountpoints:
- - { uuid: "b8ca8aee-01e3-439a-9e7b-ecc8b29d2bcb", path: "/data", fstype: "ext4", opts: "relatime" }
 
 # For Wireguard vpn
 wireguard_address: "10.8.1.6" 

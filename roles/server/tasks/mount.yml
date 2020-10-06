@@ -1,6 +1,13 @@
 ---
 
- - name: mount other filesystems
+ - name: Make mountpoints
+   file:
+     path: "{{ item.path }}"
+     state: directory
+   with_items: "{{ mountpoints }}"
+   when: mountpoints is defined
+
+ - name: Mount filesystems
    mount:
      path: "{{ item.path }}"
      src: UUID={{ item.uuid }}

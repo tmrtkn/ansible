@@ -9,13 +9,12 @@
      - vault.yml
    pre_tasks:
    roles:
-     - role: docker-grafana
-     # not in use- role: grafana-influxdb
      - role: ansible-snmp-exporter
      - role: ansible-role-netatmo-exporter-docker
      - role: ansible-blackbox-exporter
-     - role: ansible-alertmanager
      - role: ansible-prometheus
+     - role: ansible-alertmanager
+     - role: docker-grafana
 
  - name: Set up node exporters for monitoring hosts
    strategy: free

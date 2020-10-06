@@ -1,6 +1,7 @@
 ---
 - name: Remove user 'pi'
-  hosts: local
+  remote_user: "{{ username }}"
+  hosts: raspi
   become: yes
   vars_files:
     - vault.yml

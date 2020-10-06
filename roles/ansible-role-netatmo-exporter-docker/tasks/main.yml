@@ -33,7 +33,7 @@
 # TODO: If this is rpi and previous step is done, then we need to also add the tzdata package to Dockerfile
 
 # Edit the Makefile and say that we are on raspberry pi, if we are
- - name: Edit makefile if this is rpi
+ - name: Edit makefile if this is rpi (32bit)
    become: no
    lineinfile:
      path: "{{ netatmo_exporter_dir }}/Makefile"
@@ -42,6 +42,17 @@
      firstmatch: yes
      line: "GO_ARCH=arm"
    when: ansible_architecture == "armv7l" and not netatmo_dir.stat.exists
+
+# Edit the Makefile and say that we are on raspberry pi, if we are
+ - name: Edit makefile if this is rpi (64 bit)
+   become: no
+   lineinfile:
+     path: "{{ netatmo_exporter_dir }}/Makefile"
+     regexp: "^GO_ARCH="
+     insertbefore: ".+\\?\\=+"
+     firstmatch: yes
+     line: "GO_ARCH=arm64"
+   when: ansible_architecture == "aarch64" and not netatmo_dir.stat.exists
 
 # Build an image
  - name: Build netatmo-exporter Docker image
