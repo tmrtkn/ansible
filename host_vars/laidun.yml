@@ -1,6 +1,9 @@
 ---
 system_hostname: laidun
-ansible_ssh_host: 192.168.3.2
+# Use this public address when creating a VPN connections
+# Otherwise, use internal address
+ansible_host: "{{ dyfi_host_laidun }}"
+# ansible_ssh_host: 192.168.3.2
 ansible_port: 2223
 
 dyfi_host: "{{ dyfi_host_laidun }}"

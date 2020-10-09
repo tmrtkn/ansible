@@ -4,7 +4,7 @@
 # This uses remote_user: pi to create another user.
 # When another user is created, then rest of the playbooks can be run.
 # e.g.:
-# $ ansible-playbook -i hosts.yml --vault-password-file ./vault_password raspberry_pi_create_user.yml --limit <host> -k -K
+# $ ansible-playbook -i hosts.yml --vault-password-file ./vault_password raspberry_pi_create_user.yml --limit <host> 
  # - import_playbook: raspberry_pi_create_user.yml
    
 # Using just created user, remove user 'pi'
@@ -13,12 +13,6 @@
 # For every server, do basic setup things
 # Goes for rpis and other also
  - import_playbook: basic_setup.yml
-
-# Setup vpn
-# You need to manually change 'camera'-hosts
-# 'ansible_host' variable to point to the public address
-# and after this vpn.yml playbook, change it back to internal address
- - import_playbook: vpn.yml
 
 # Set up DNS stuff. Pihole and unbound
  - import_playbook: dns.yml
@@ -31,3 +25,9 @@
 
 # Setup dyfi DDNS
  - import_playbook: dyfi.yml
+
+# Setup vpn
+# You need to manually change 'camera'-hosts
+# 'ansible_host' variable to point to the public address
+# and after this vpn.yml playbook, change it back to internal address
+ - import_playbook: vpn.yml

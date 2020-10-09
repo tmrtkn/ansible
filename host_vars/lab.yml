@@ -1,6 +1,6 @@
 
 system_hostname: lab
-ansible_host: 192.168.10.112
+# ansible_host: 192.168.10.112
 ansible_ssh_host: 192.168.10.112
 
 # This list is copied and extended from var_hosts/local
@@ -22,7 +22,6 @@ go_arch_map:
   armv6l: 'armv6'
 
 
-
 # For Wireguard vpn
 wireguard_address: "10.8.1.6" 
 wireguard_endpoint: "kovelahti.tunk.org"
@@ -30,8 +29,9 @@ wireguard_endpoint: "kovelahti.tunk.org"
 wireguard_allowed_ips: "{{ wireguard_address }}/32, 192.168.10.0/24"
 
 wireguard_postup:
- - iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+ - iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o enxb827ebffe009 -j MASQUERADE
 
 wireguard_postdown:
- - iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+ - iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o enxb827ebffe009 -j MASQUERADE
+
 
