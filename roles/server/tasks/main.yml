@@ -20,7 +20,7 @@
      - locale
 
 - import_tasks: mount_tmpfs.yml
-  when: ansible_lsb.id == "Raspbian"
+  when: "{{ server_is_raspberry_pi }} == true"
   tags:
    - mount_tmpfs
 

@@ -1,0 +1,44 @@
+
+system_hostname: ubu
+# ansible_host: 192.168.10.120
+ansible_ssh_host: 192.168.1.132
+
+server_is_raspberry_pi: true
+
+# For mounting local disk
+mountpoints:
+ - { uuid: "b8ca8aee-01e3-439a-9e7b-ecc8b29d2bcb", path: "/data", fstype: "ext4", opts: "relatime" }
+
+# This list is copied and extended from var_hosts/local
+# TODO: How to do this better? So that I could just add stuff here and keep the stuff defined in group-vars
+system_packages:
+  - vim
+ # - silversearcher-ag # for vim & fzf
+  - libsasl2-modules # postfix stuff
+  # If if installing git does not work because of some broken dependencies, install gcc-8-base to fix the problem
+  # gcc-8-base seems to require some user intactions, so I don't know if it can be run here, or some 'y' flag need so be set, at least
+  # - gcc-8-base
+  - git
+  - net-tools
+
+go_arch_map:
+  i386: '386'
+  x86_64: 'amd64'
+  aarch64: 'arm64'
+  armv7l: 'armv7'
+  armv6l: 'armv6'
+
+
+# For Wireguard vpn
+wireguard_address: "10.8.1.7" 
+wireguard_endpoint: "kovelahti.tunk.org"
+
+wireguard_allowed_ips: "{{ wireguard_address }}/32, 192.168.10.0/24"
+
+wireguard_postup:
+ - iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+wireguard_postdown:
+ - iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+

@@ -13,5 +13,6 @@
         groups: sudo
         append: yes
         password: "{{ new_user_password | password_hash('sha512')  }}"
+        shell: /bin/bash
         update_password: on_create
 
