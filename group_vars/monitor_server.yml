@@ -50,6 +50,7 @@ prometheus_targets:
        - lab:9100
        - pihole:9100
        - camera:9100
+       - ubu:9100
      labels:
        env: kovelahti
 
@@ -98,6 +99,7 @@ prometheus_scrape_configs:
           - camera
           - lab
           - pihole
+          - ubu
           - deploy
           - www.google.com  
           - 8.8.8.8

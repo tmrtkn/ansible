@@ -129,8 +129,9 @@ groups:
         summary: "Prometheus target empty (instance {{ $labels.instance }})"
         description: "Prometheus has no target in service discovery\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
+    # Updated this from 60s to 96s, since there is a job that has 90s interval
     - alert: PrometheusTargetScrapingSlow
-      expr: prometheus_target_interval_length_seconds{quantile="0.9"} > 60
+      expr: prometheus_target_interval_length_seconds{quantile="0.9"} > 96
       for: 5m
       labels:
         severity: warning

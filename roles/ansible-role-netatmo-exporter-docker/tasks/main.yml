@@ -16,6 +16,7 @@
    git:
      repo: "https://github.com/xperimental/netatmo-exporter.git"
      dest: "{{ netatmo_exporter_dir }}"
+     force: yes
    when: not netatmo_dir.stat.exists
 
 # TODO:

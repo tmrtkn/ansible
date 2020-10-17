@@ -33,7 +33,7 @@ go_arch_map:
 wireguard_address: "10.8.1.7" 
 wireguard_endpoint: "kovelahti.tunk.org"
 
-wireguard_allowed_ips: "{{ wireguard_address }}/32, 192.168.10.0/24"
+wireguard_allowed_ips: "{{ wireguard_address }}/32, 192.168.10.0/24, 192.168.1.0/24"
 
 wireguard_postup:
  - iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
