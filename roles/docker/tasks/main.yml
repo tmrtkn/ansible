@@ -12,13 +12,8 @@
      state: present
    when: docker_installed.rc != 0
 
- - name: Get and run convenience script for raspbian
+ - name: Get and run convenience script
    shell: curl -sSL https://get.docker.com/ | sh
-   when: docker_installed.rc != 0
-
- - name: Execute docker install
-   command: /tmp/get-docker.sh
-   become: yes
    when: docker_installed.rc != 0
 
  - name: Install python-docker

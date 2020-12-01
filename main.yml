@@ -9,16 +9,17 @@
    
 # Using just created user, remove user 'pi'
  - import_playbook: raspberry_pi_remove_pi_user.yml
+ - import_playbook: ubuntu_remove_ubuntu_user.yml
 
 # For every server, do basic setup things
 # Goes for rpis and other also
  - import_playbook: basic_setup.yml
 
-# Set up DNS stuff. Pihole and unbound
- - import_playbook: dns.yml
-
 # Setup docker for docker hosts
  - import_playbook: docker.yml
+
+# Set up DNS stuff. Pihole and unbound
+ - import_playbook: dns.yml
 
 # Setup monitoring
  - import_playbook: monitoring.yml

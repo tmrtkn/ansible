@@ -35,6 +35,14 @@ wireguard_endpoint: "kovelahti.tunk.org"
 
 wireguard_allowed_ips: "{{ wireguard_address }}/32, 192.168.10.0/24, 192.168.1.0/24"
 
+wireguard_unmanaged_peers:
+  phone:
+    public_key: 8yfLe4iZ6rhp13eNuSn3AHpUopcylwPad+RUCbGKdTM=
+    # preshared_key: 
+    allowed_ips: 10.8.1.0/24, 192.168.0.0/24
+    # endpoint: 
+    persistent_keepalive: 0
+
 wireguard_postup:
  - iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 

@@ -69,6 +69,7 @@ prometheus_scrape_configs:
     metrics_path: /snmp
     static_configs:
       - targets:
+          - 192.168.1.1
           - 192.168.10.1
     params:
       module:
